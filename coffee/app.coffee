@@ -73,12 +73,11 @@ Views =
 
     template: ->
       title = @model.id
-      title = title.replace(/./,title[0].toUpperCase())
-
+      title = title[0].toUpperCase() + title.slice(1)
       [
         div {class:'title'}, title + ': '
         div {class:'paren'}, '{'
-        div {class:'block'}, '  '
+        div {class:'block'}, div {class: 'content'}, '<br>' + @model.get('content')
         div {class:'paren'}, '}'
       ].join ''
 
@@ -87,10 +86,26 @@ Views =
       @$('.block').height() > lineHeight
 
     expand: ->
-      @$('.block').transition({display: 'block'}).transition({height:'40'})
+      @$('.block')
+        .transition({display: 'block'})
+        .transition({height:'70'},
+          ->
+            $content = $(@).find('.content')
+            $content
+              .css({opacity:0,display:'block'})
+              .transition({opacity:1})
+
+        )
 
     contract: ->
-      @$('.block').transition({height:'0'}).transition({display: 'inline'})
+      @$('.content')
+        .transition({opacity:0})
+        .transition({display:'block'}, ->
+          $block = $(@).parents('.block')
+          $block
+            .transition({height:0})
+            .transition({display:'none'})
+        )
 
     toggleExpand: (e) ->
       @isExpanded() and @contract() or @expand()
@@ -101,17 +116,18 @@ Views =
 
 models =
   sections : new Models.Sections([
-    {id:'story'}
-    {id:'purpose'}
-    {id:'products'}
-    {id:'services'}
-    {id:'team'}
-    {id:'partners'}
-    {id:'contact'}
+    {id:'story', content: "Two brothers, building beautiful things."}
+    {id:'purpose', content: "The world is broken.  We aim to fix it."}
+    {id:'products', content: "We are a young company.  We are currently building a scoping AI for major infrastructure companies" }
+    {id:'services', content: "We deploy our AI on the field for you." }
+    {id:'team', content: "FMITKU is the brain child of brothers; James (Code) and John Forbes (Engineer)"}
+    {id:'partners', content: "We are working closely with Thiess, NBN Co, Optus and Telstra"}
+    {id:'contact', content: "You can always reach us via email contact@fmitku.com or via twitter @fmitku" }
   ])
 views = new (Backbone.View.extend(Views.Main))
 
 $('.content').replaceWith(views.$el)
+
 window.f = 
   models: models
   views: views

@@ -38,6 +38,9 @@ h1 { margin: 0.02em;}
 	display: inline;
 	height:0;
 }
+.block .content {
+	display: none;
+}
 .paren {
 	display: inline;
 }
