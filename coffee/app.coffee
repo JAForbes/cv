@@ -111,6 +111,7 @@ models =
   ])
 views = new (Backbone.View.extend(Views.Main))
 
+$('.content').replaceWith(views.$el)
 window.f = 
   models: models
   views: views
