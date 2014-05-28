@@ -1,0 +1,46 @@
+* {
+	font-family: 'Helvetica';
+	margin:0;
+	padding: 0;
+	user-select: none;
+	cursor: default;
+}
+h1 { margin: 0.02em;}
+@font-face {
+    font-family: 'Neou'; 
+    src: url('../fonts/Neou-Thin.ttf'); 
+}
+.font-thin{
+	font-family: 'Neou';
+	font-weight: 100;
+}
+.super-size {
+	font-size: 3em;
+}
+.content{
+	color:black;
+	margin-left: 1em;
+}
+.sections {
+	margin-left: 1em;
+}
+.section {
+	margin: 1em;
+}
+.copyright {
+	position: absolute;
+	bottom: 1em;
+	text-align: center;
+	width: 100%;
+	color:#AAA;
+}
+.block {
+	display: inline;
+	height:0;
+}
+.paren {
+	display: inline;
+}
+.title {
+	display: inline;
+}
