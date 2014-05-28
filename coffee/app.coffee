@@ -1,12 +1,6 @@
-Models = {}
-Models.Section = Backbone.Model.extend({
-  initialize: ->
-    id = @id.replace(/\s/g,'_')
-    @set('content',marked.parse($('#templates #'+id).text()))
-})
-Models.Sections = Backbone.Collection.extend({
-  model: Models.Section
-})
+Models = 
+  Sections: Backbone.Collection.extend()
+
 Views = 
 
   Main : 
@@ -53,6 +47,7 @@ Views =
     initialize: ->
       @setupViews()
       @render()
+      @sections[0].toggleExpand()
 
     setupViews: ->
       sections = []
@@ -72,14 +67,15 @@ Views =
     className:'section'
 
     events: 
-      'click':'toggleExpand'
+      'click .title,.paren':'toggleExpand'
 
     initialize: ->
       @render()
 
     template: ->
       title = @model.id
-      title = title[0].toUpperCase() + title.slice(1)
+      title = (title[0].toUpperCase() + title.slice(1)).replace(/_/g,' ')
+
       [
         div {class:'title'}, title + ':'
         div {class:'block'}, [
@@ -99,7 +95,9 @@ Views =
         .transition({maxHeight:'100%'})
     
     contract: ->
-      @$('.block .content').css({maxWidth:'0%'}).transition({maxHeight:'0%'})
+      @$('.block .content')
+        .transition({maxHeight:'0%'})
+        .transition({maxWidth:'0%'})
 
     toggleExpand: (e) ->
       @isExpanded() and @contract() or @expand()
@@ -108,16 +106,19 @@ Views =
       @$el.empty().append @template()
       @delegateEvents()
 
+modeled = $('script[type="text/markdown"]').map ->
+      {
+        id:$(this)[0].id
+        content: marked.parse(
+          $(this).text()
+        ) 
+      }
+    .get()
+
 models =
-  sections : new Models.Sections([
-    {id:'overview'}
-    {id:'ideal employment'}
-    {id:'experience'}
-    {id:'history'}
-    {id:'achievements'}
-    {id:'interests'}
-    {id:'reference'}
-  ])
+  sections : new Models.Sections(
+    modeled
+  )
 views = new (Backbone.View.extend(Views.Main))
 
 $('.content').replaceWith(views.$el)

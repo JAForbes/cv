@@ -9,6 +9,12 @@
   	user-select: none;     
 	cursor: default;
 }
+a{
+	color:#999;
+}
+a:visited{
+	color:#999;
+}
 body{
 	margin: 0;
 	padding: 0;
@@ -29,7 +35,6 @@ h1 { margin: 0.02em;}
 .content{
 	color:black;
 	margin-left: 1em;
-	overflow-y: auto;
 }
 .sections {
 	margin-left: 1em;
@@ -54,8 +59,12 @@ h1 { margin: 0.02em;}
 }
 .paren{
 	float: left;
+	color: red;
 }
 .title{
 	margin-right: 0.2em;
 	float: left;
+}
+th{
+	text-align: left;
 }
