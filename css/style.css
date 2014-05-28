@@ -1,11 +1,18 @@
 * {
 	font-family: 'Helvetica';
-	user-select: none;
+	-webkit-user-select: none;  /* Chrome all / Safari all */
+	-moz-user-select: none;     /* Firefox all */
+	-ms-user-select: none;      /* IE 10+ */
+
+	/* No support for these yet, use at own risk */
+  	-o-user-select: none;
+  	user-select: none;     
 	cursor: default;
 }
 body{
 	margin: 0;
 	padding: 0;
+	overflow-y: hidden;
 }
 h1 { margin: 0.02em;}
 @font-face {
@@ -28,7 +35,9 @@ h1 { margin: 0.02em;}
 	margin-left: 1em;
 }
 .section {
-	margin: 1em;
+	margin: 1vw;
+	width: 90vw;
+	margin-bottom: 2em;
 }
 .copyright {
 	position: absolute;
@@ -37,16 +46,14 @@ h1 { margin: 0.02em;}
 	width: 100%;
 	color:#AAA;
 }
-.block {
-	display: inline;
-	height:0;
-}
 .block .content {
-	display: none;
+	max-height: 0;
+	overflow: hidden;
 }
-.paren {
-	display: inline;
+.paren{
+	float: left;
 }
-.title {
-	display: inline;
+.title{
+	margin-right: 0.2em;
+	float: left;
 }

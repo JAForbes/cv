@@ -80,37 +80,23 @@ Views =
       title = @model.id
       title = title[0].toUpperCase() + title.slice(1)
       [
-        div {class:'title'}, title + ': '
-        div {class:'paren'}, '{'
-        div {class:'block'}, div {class: 'content'}, '<br>' + @model.get('content')
-        div {class:'paren'}, '}'
+        div {class:'title'}, title + ':'
+        div {class:'block'}, [
+          div {class:'paren'}, '{'
+          div {class: 'content'}, '<br>' + @model.get('content')
+          div {class:'paren'}, '}'
+        ]
       ].join ''
 
     isExpanded: ->
       lineHeight = 20
-      @$('.block').height() > lineHeight
+      @$('.block .content').height() > lineHeight
 
     expand: ->
-      @$('.block')
-        .transition({display: 'block'})
-        .transition({height:'50%'},
-          ->
-            $content = $(@).find('.content')
-            $content
-              .css({opacity:0,display:'block'})
-              .transition({opacity:1})
-
-        )
-
+      @$('.block .content').transition({maxHeight:'100%'})
+    
     contract: ->
-      @$('.content')
-        .transition({opacity:0})
-        .transition({display:'block'}, ->
-          $block = $(@).parents('.block')
-          $block
-            .transition({height:0})
-            .transition({display:'none'})
-        )
+      @$('.block .content').transition({maxHeight:'0%'})
 
     toggleExpand: (e) ->
       @isExpanded() and @contract() or @expand()
