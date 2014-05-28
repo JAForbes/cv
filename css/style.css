@@ -49,6 +49,8 @@ h1 { margin: 0.02em;}
 .block .content {
 	max-height: 0;
 	overflow: hidden;
+	width:100%;
+	max-width: 0%;
 }
 .paren{
 	float: left;

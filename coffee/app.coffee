@@ -1,7 +1,8 @@
 Models = {}
 Models.Section = Backbone.Model.extend({
   initialize: ->
-    @set('content',marked.parse($('#templates #'+@id).text()))
+    id = @id.replace(/\s/g,'_')
+    @set('content',marked.parse($('#templates #'+id).text()))
 })
 Models.Sections = Backbone.Collection.extend({
   model: Models.Section
@@ -14,7 +15,7 @@ Views =
     views: []
     initialize: ->
       @setupViews([
-        {name: 'Heading', options: {text:'FMITKU = {'} }
+        {name: 'Heading', options: {text:'James Forbes = {'} }
         {name: 'Sections'}
         {name: 'Heading', options: {text:'}'} }
       ])
@@ -93,10 +94,12 @@ Views =
       @$('.block .content').height() > lineHeight
 
     expand: ->
-      @$('.block .content').transition({maxHeight:'100%'})
+      @$('.block .content')
+        .css({maxWidth: '100%'})
+        .transition({maxHeight:'100%'})
     
     contract: ->
-      @$('.block .content').transition({maxHeight:'0%'})
+      @$('.block .content').css({maxWidth:'0%'}).transition({maxHeight:'0%'})
 
     toggleExpand: (e) ->
       @isExpanded() and @contract() or @expand()
@@ -107,13 +110,13 @@ Views =
 
 models =
   sections : new Models.Sections([
-    {id:'story'}
-    {id:'purpose'}
-    {id:'products'}
-    {id:'services'}
-    {id:'team'}
-    {id:'partners'}
-    {id:'contact'}
+    {id:'overview'}
+    {id:'ideal employment'}
+    {id:'experience'}
+    {id:'history'}
+    {id:'achievements'}
+    {id:'interests'}
+    {id:'reference'}
   ])
 views = new (Backbone.View.extend(Views.Main))
 
