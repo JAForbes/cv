@@ -96,8 +96,7 @@ Views =
     
     contract: ->
       @$('.block .content')
-        .transition({maxHeight:'0%'})
-        .transition({maxWidth:'0%'})
+        .transition({maxHeight:0})
 
     toggleExpand: (e) ->
       @isExpanded() and @contract() or @expand()
